@@ -12,12 +12,14 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class UserDto {
-    private String userId;
     private long Id;
+    private String userId;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private String encryptedPassword;
     private String phone;
+    private Boolean admin = false;
     private List<Post> posts;
 }

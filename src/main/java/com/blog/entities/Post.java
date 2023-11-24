@@ -12,13 +12,11 @@ import java.util.List;
 @Data
 @Entity(name = "posts")
 public class Post {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private Long Id;
     private String postId;
-    private String name;
+    private String title;
     private String body;
     @ManyToOne
     @JoinColumn(name="userId")

@@ -7,21 +7,30 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+
+
+
+@Entity(name = "users")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Entity(name = "users")
 public class User {
 
-    private String userId;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private Long Id;
+    @Column(nullable = false)
+    private String userId;
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
+    @Column(nullable = true)
+    private String encryptedPassword;
     private String phone;
+    @Column(nullable = true)
+    private Boolean admin=false;
     @OneToMany(mappedBy = "user",cascade= CascadeType.ALL)
     private List<Post> posts;
+
 }
