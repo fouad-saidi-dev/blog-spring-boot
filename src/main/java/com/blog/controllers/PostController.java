@@ -9,15 +9,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/posts")
 public class PostController {
 
     @Autowired
@@ -36,5 +35,32 @@ public class PostController {
         BeanUtils.copyProperties(createPost,postResponse);
 
         return new ResponseEntity<PostResponse>(postResponse, HttpStatus.CREATED);
+    }
+
+    @GetMapping("")
+    public List<PostResponse> getPosts() {
+
+        List<PostResponse> postResponses = new ArrayList<>();
+
+        List<PostDto> posts = postService.allPosts();
+
+        for (PostDto postDto:posts) {
+            PostResponse postResponse = new PostResponse();
+            BeanUtils.copyProperties(postDto,postResponse);
+            postResponses.add(postResponse);
+        }
+
+        return postResponses;
+    }
+
+    @GetMapping(path = "{id}")
+    public ResponseEntity<PostResponse> showPost(@PathVariable String id) {
+
+        PostDto postDto = postService.showPost(id);
+
+        PostResponse postResponse = new PostResponse();
+        BeanUtils.copyProperties(postDto,postResponse);
+
+        return new ResponseEntity<PostResponse>(postResponse,HttpStatus.OK);
     }
 }

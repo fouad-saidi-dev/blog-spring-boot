@@ -8,12 +8,13 @@ import com.blog.utils.Util;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    //@Autowired
+    //BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     Util util;
@@ -93,6 +97,18 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    /*@Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
+        Optional<User> opt = userRepository.findByEmail(email);
 
+        if (opt.isEmpty())
+            throw new UsernameNotFoundException("User NOt Found");
+        else {
+            User user = opt.get();
+
+        }
+
+        return null;
+    }*/
 }
