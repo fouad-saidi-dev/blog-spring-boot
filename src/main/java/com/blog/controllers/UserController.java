@@ -2,14 +2,21 @@ package com.blog.controllers;
 
 import com.blog.dto.UserDto;
 import com.blog.entities.User;
+import com.blog.repositories.UserRepository;
+import com.blog.requests.UserLoginRequest;
 import com.blog.requests.UserRequest;
 import com.blog.responses.UserResponse;
+import com.blog.security.JwtService;
 import com.blog.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +32,17 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    private JwtService jwtService;
+
+    @Autowired
+    UserRepository userRepository;
+
+
+    @PostMapping("/login")
+    public String authenticateAndGetToken(@RequestBody UserLoginRequest userLoginRequest) throws Exception {
+        return jwtService.generateToken(userLoginRequest.getEmail());
+    }
 
     @PostMapping("/add-user")
     public ResponseEntity<UserResponse> addUser(@RequestBody UserRequest userRequest) {
