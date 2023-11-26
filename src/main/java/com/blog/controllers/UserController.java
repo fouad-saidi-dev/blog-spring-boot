@@ -5,8 +5,10 @@ import com.blog.entities.User;
 import com.blog.repositories.UserRepository;
 import com.blog.requests.UserLoginRequest;
 import com.blog.requests.UserRequest;
+import com.blog.responses.UserLoginResponse;
 import com.blog.responses.UserResponse;
 import com.blog.security.JwtService;
+import com.blog.security.JwtUtil;
 import com.blog.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -17,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,16 +36,39 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    private JwtService jwtService;
+    //@Autowired
+    //private JwtService jwtService;
 
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtUtil util;
+    /*@PostMapping("/login")
+    public String authenticateAndGetToken(@RequestBody UserLoginRequest userLoginRequest) {
+
+
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginRequest.getEmail(), userLoginRequest.getPassword()));
+        if (authentication.isAuthenticated()) {
+            return jwtService.generateToken(userLoginRequest.getEmail());
+        } else {
+            return "invalid login !";
+        }
+    }*/
 
     @PostMapping("/login")
-    public String authenticateAndGetToken(@RequestBody UserLoginRequest userLoginRequest) throws Exception {
-        return jwtService.generateToken(userLoginRequest.getEmail());
+    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
+
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+           userLoginRequest.getEmail(),userLoginRequest.getPassword()
+        ));
+        String token = util.generateToken(userLoginRequest.getEmail());
+        return ResponseEntity.ok(new UserLoginResponse(token,"Token generated successfully!"));
+
     }
 
     @PostMapping("/add-user")

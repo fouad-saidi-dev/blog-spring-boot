@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
@@ -18,17 +19,20 @@ public class BlogSpringBootApplication implements CommandLineRunner {
     @Autowired
     UserRepository userRepository;
 
+    //@Autowired
+    //BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public static void main(String[] args) {
         SpringApplication.run(BlogSpringBootApplication.class, args);
     }
 
-    //@Bean
-    //public BCryptPasswordEncoder bCryptPasswordEncoder() {
-    //    return new BCryptPasswordEncoder();
-    //}
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     public void run(String... args) throws Exception {
-        //userRepository.save(new User(null,"user1234","fname","lname","mail","password","0987873",false));
+        userRepository.save(new User(null,"126847","fname","lname","email@email.com",bCryptPasswordEncoder().encode("password"),"09876476",false,null));
     }
 }

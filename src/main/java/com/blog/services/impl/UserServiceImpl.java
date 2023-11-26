@@ -6,7 +6,6 @@ import com.blog.repositories.UserRepository;
 import com.blog.services.UserService;
 import com.blog.utils.Util;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,14 +16,14 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService,UserDetailsService {
 
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
-    //@Autowired
-    //BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     Util util;
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserService {
         Map<Long,User> map = new HashMap<>();
 
         userDto.setUserId(util.generateStringId(15));
-        userDto.setEncryptedPassword("password");
+        userDto.setEncryptedPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
 
         User user = new User();
         user.setEmail(userDto.getEmail());
@@ -96,19 +95,31 @@ public class UserServiceImpl implements UserService {
         return userDtoList;
     }
 
-
-    /*@Override
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Optional<User> opt = userRepository.findByEmail(email);
+        /*Optional<User> checkUser = userRepository.findByEmail(email);
 
-        if (opt.isEmpty())
-            throw new UsernameNotFoundException("User NOt Found");
-        else {
-            User user = opt.get();
+        org.springframework.security.core.userdetails.User springUser = null;
 
+        if (checkUser.isEmpty()) {
+            throw new UsernameNotFoundException("User with email: "+email+" not found !");
+        } else {
+            User user = checkUser.get();
+            springUser = new org.springframework.security.core.userdetails.User(
+                    email,
+                    user.getEncryptedPassword(),
+                    null
+            );
         }
+        return springUser;*/
 
-        return null;
-    }*/
+        User user = userRepository.findByEmail(email);
+
+        if(user==null) throw new UsernameNotFoundException(email);
+
+        return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getEncryptedPassword(),new ArrayList<>());
+
+    }
+
 }
