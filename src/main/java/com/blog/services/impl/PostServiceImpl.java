@@ -32,15 +32,15 @@ public class PostServiceImpl implements PostService {
     PostRepository postRepository;
 
     @Override
-    public PostDto createPost(PostDto postDto) {
+    public PostDto createPost(PostDto postDto,String email) {
 
-        //User currentUser = userRepository.findByEmail(email);
+        User currentUser = userRepository.findByEmail(email);
 
         Post post = new Post();
 
         BeanUtils.copyProperties(postDto, post);
         post.setPostId(util.generateStringId(15));
-
+        post.setUser(currentUser);
         Post newPost = postRepository.save(post);
 
         PostDto dto = new PostDto();

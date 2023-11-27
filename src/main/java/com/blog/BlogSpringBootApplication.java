@@ -2,6 +2,7 @@ package com.blog;
 
 import com.blog.entities.User;
 import com.blog.repositories.UserRepository;
+import com.blog.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +20,9 @@ public class BlogSpringBootApplication implements CommandLineRunner {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    Util util;
+
     //@Autowired
     //BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -33,6 +37,6 @@ public class BlogSpringBootApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        userRepository.save(new User(null,"126847","fname","lname","email@email.com",bCryptPasswordEncoder().encode("password"),"09876476",false,null));
+        userRepository.save(new User(null, util.generateStringId(30), "fuser","luser","user1@gmail.com",bCryptPasswordEncoder().encode("password"),"09876476",false,null));
     }
 }

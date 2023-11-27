@@ -28,7 +28,7 @@ public class PostController {
         PostDto postDto = new PostDto();
         BeanUtils.copyProperties(postRequest,postDto);
 
-        PostDto createPost = postService.createPost(postDto);
+        PostDto createPost = postService.createPost(postDto, principal.getName());
 
         PostResponse postResponse = new PostResponse();
 
