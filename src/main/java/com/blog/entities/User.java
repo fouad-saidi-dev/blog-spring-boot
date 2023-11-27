@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-
-
 
 
 @Entity(name = "users")
@@ -29,8 +31,14 @@ public class User {
     private String encryptedPassword;
     private String phone;
     @Column(nullable = true)
-    private Boolean admin=false;
-    @OneToMany(mappedBy = "user",cascade= CascadeType.ALL)
+    private Boolean admin = false;
+    @CreatedDate
+    @Column(nullable = true)
+    private Date created_at;
+    @Column(nullable = true)
+    @LastModifiedBy
+    private LocalDateTime updatedAt;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;
 
 }

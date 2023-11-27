@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -20,6 +22,8 @@ public class UserDto {
     private String password;
     private String encryptedPassword;
     private String phone;
+    private Date createdAt;
+    private LocalDateTime updatedAt;
     private Boolean admin = false;
     private List<Post> posts;
 }

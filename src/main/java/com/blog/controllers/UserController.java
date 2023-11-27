@@ -24,6 +24,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,7 @@ public class UserController {
 
     @Autowired
     private JwtUtil util;
+
     /*@PostMapping("/login")
     public String authenticateAndGetToken(@RequestBody UserLoginRequest userLoginRequest) {
 
@@ -85,15 +87,17 @@ public class UserController {
         return new ResponseEntity<UserResponse>(userResponse, HttpStatus.CREATED);
     }
 
-    /*public ResponseEntity<UserResponse> add(@RequestBody UserRequest userRequest){
+    @GetMapping(path = "{id}")
+    public ResponseEntity<UserResponse> getUser(@PathVariable String id){
 
-        Map<String,UserRequest> map = new HashMap<>();
+        UserDto userDto = userService.showUser(id);
+        UserResponse userResponse = new UserResponse();
+        BeanUtils.copyProperties(userDto,userResponse);
 
-        return new ResponseEntity<>();
+        return new ResponseEntity<UserResponse>(userResponse,HttpStatus.OK);
+    }
 
-    }*/
-
-    @GetMapping("/users")
+    @GetMapping("")
     public List<UserResponse> getUsers() {
 
         List<UserResponse> userResponses = new ArrayList<>();
@@ -107,6 +111,28 @@ public class UserController {
         }
 
         return userResponses;
+    }
+
+    @PutMapping(path = "{id}")
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userRequest, @PathVariable String id, Principal email) {
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userRequest,userDto);
+
+        UserDto userUpdated = userService.updateUser(id,userDto,email.getName());
+
+        UserResponse userResponse = new UserResponse();
+        BeanUtils.copyProperties(userUpdated,userResponse);
+
+        return new ResponseEntity<>(userResponse,HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable String id) {
+
+        userService.deleteUser(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 
 
