@@ -59,7 +59,7 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/users/login").permitAll();
+                    auth.requestMatchers("/users/login","/users/add-user").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session ->

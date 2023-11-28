@@ -22,7 +22,7 @@ public class UserDto {
     private String password;
     private String encryptedPassword;
     private String phone;
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean admin = false;
     private List<Post> posts;

@@ -59,18 +59,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (checkUser != null) throw new RuntimeException("user was already exist !");
         Map<Long, User> map = new HashMap<>();
 
-        userDto.setUserId(util.generateStringId(15));
-        userDto.setEncryptedPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        //userDto.setUserId(util.generateStringId(15));
+        //userDto.setEncryptedPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
 
         User user = new User();
         user.setEmail(userDto.getEmail());
-        user.setUserId(userDto.getUserId());
+        user.setUserId(util.generateStringId(15));
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
-        user.setEncryptedPassword(userDto.getEncryptedPassword());
+        user.setEncryptedPassword(bCryptPasswordEncoder.encode("password"));
         user.setPhone(userDto.getPhone());
-
+        user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
 
         map.put(user.getId(), user);
@@ -82,6 +82,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         savedUserDto.setEmail(user.getEmail());
         savedUserDto.setEncryptedPassword(user.getEncryptedPassword());
         savedUserDto.setPhone(user.getPhone());
+        savedUserDto.setCreatedAt(user.getCreatedAt());
 
         return savedUserDto;
     }

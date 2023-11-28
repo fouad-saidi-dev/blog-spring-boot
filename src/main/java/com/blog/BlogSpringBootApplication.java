@@ -1,6 +1,8 @@
 package com.blog;
 
+import com.blog.entities.Role;
 import com.blog.entities.User;
+import com.blog.repositories.RoleRepository;
 import com.blog.repositories.UserRepository;
 import com.blog.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +18,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @SpringBootApplication
 public class BlogSpringBootApplication /*implements CommandLineRunner*/ {
 
 //    @Autowired
-//    UserRepository userRepository;
+//    RoleRepository roleRepository;
 //
 //    @Autowired
 //    Util util;
 
-    //@Autowired
-    //BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public static void main(String[] args) {
         SpringApplication.run(BlogSpringBootApplication.class, args);
@@ -41,6 +42,8 @@ public class BlogSpringBootApplication /*implements CommandLineRunner*/ {
 
 //    @Override
 //    public void run(String... args) throws Exception {
-//        userRepository.save(new User(null, util.generateStringId(15), "fuser","luser","user6@gmail.com",bCryptPasswordEncoder().encode("password"),"09876476",false, Date.valueOf(LocalDate.now()),null,null));
+//        roleRepository.save(new Role(null, util.generateStringId(15),"admin", LocalDate.now(),LocalDate.now()));
+//        roleRepository.save(new Role(null, util.generateStringId(15),"author", LocalDate.now(),LocalDate.now()));
+//        roleRepository.save(new Role(null, util.generateStringId(15),"subscriber", LocalDate.now(),LocalDate.now()));
 //    }
 }

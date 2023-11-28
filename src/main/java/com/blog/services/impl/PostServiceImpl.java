@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class PostServiceImpl implements PostService {
         BeanUtils.copyProperties(postDto, post);
         post.setPostId(util.generateStringId(15));
         post.setUser(currentUser);
+        post.setCreatedAt(LocalDateTime.now());
         Post newPost = postRepository.save(post);
 
         PostDto dto = new PostDto();
@@ -77,5 +80,36 @@ public class PostServiceImpl implements PostService {
         BeanUtils.copyProperties(post,dto);
 
         return dto;
+    }
+
+    @Override
+    public PostDto updatePost(PostDto postDto, String postId, String email) {
+
+        User checkUser = userRepository.findByEmail(email);
+
+        Post post = postRepository.findByPostId(postId);
+
+        if (checkUser == post.getUser()) {
+            post.setTitle(postDto.getTitle());
+            post.setBody(postDto.getBody());
+            post.setUpdatedAt(LocalDateTime.now());
+        }
+        Post postUpdated = postRepository.save(post);
+        PostDto dto = new PostDto();
+        BeanUtils.copyProperties(postUpdated,dto);
+
+        return dto;
+    }
+
+    @Override
+    public PostDto deletePost(String id) {
+
+        Post post = postRepository.findByPostId(id);
+
+        if (post == null) throw new UsernameNotFoundException(id);
+
+        postRepository.delete(post);
+
+        return null;
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -87,7 +88,8 @@ public class UserController {
         return new ResponseEntity<UserResponse>(userResponse, HttpStatus.CREATED);
     }
 
-    @GetMapping(path = "{id}")
+
+    @GetMapping(path = "{id}",produces = {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserResponse> getUser(@PathVariable String id){
 
         UserDto userDto = userService.showUser(id);

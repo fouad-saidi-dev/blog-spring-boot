@@ -1,6 +1,5 @@
 package com.blog.dto;
 
-import com.blog.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,14 +7,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
-@Data
 @AllArgsConstructor
-public class PostDto {
+@Data
+public class RoleDto {
     private Long Id;
-    private String postId;
-    private String title;
-    private String body;
+    private String roleId;
+    private String name;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private User user;
 }

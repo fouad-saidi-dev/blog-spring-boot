@@ -34,7 +34,7 @@ public class User {
     private Boolean admin = false;
     @CreatedDate
     @Column(nullable = true)
-    private Date created_at;
+    private LocalDateTime createdAt;
     @Column(nullable = true)
     @LastModifiedBy
     private LocalDateTime updatedAt;

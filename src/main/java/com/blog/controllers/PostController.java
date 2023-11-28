@@ -63,4 +63,27 @@ public class PostController {
 
         return new ResponseEntity<PostResponse>(postResponse,HttpStatus.OK);
     }
+
+    @PutMapping(path = "{id}")
+    public ResponseEntity<PostResponse> updatePost(@PathVariable String id,@RequestBody PostRequest postRequest,Principal principal) {
+
+        PostDto postDto = new PostDto();
+        BeanUtils.copyProperties(postRequest,postDto);
+
+        PostDto updatedPost = postService.updatePost(postDto,id, principal.getName());
+
+        PostResponse postResponse = new PostResponse();
+        BeanUtils.copyProperties(updatedPost,postResponse);
+
+        return new ResponseEntity<PostResponse>(postResponse,HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<?> deletePost(@PathVariable String id) {
+
+        postService.deletePost(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
 }

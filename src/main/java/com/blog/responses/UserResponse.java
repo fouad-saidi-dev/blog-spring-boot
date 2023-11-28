@@ -1,8 +1,11 @@
 package com.blog.responses;
 
+import com.blog.entities.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -12,4 +15,6 @@ public class UserResponse {
     private String lastName;
     private String email;
     private String phone;
+    private List<PostResponse> posts;
+
 }

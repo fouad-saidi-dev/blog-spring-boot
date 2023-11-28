@@ -4,7 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -18,6 +22,12 @@ public class Post {
     private String postId;
     private String title;
     private String body;
+    @CreatedDate
+    @Column(nullable = true)
+    private LocalDateTime createdAt;
+    @LastModifiedBy
+    @Column(nullable = true)
+    private LocalDateTime updatedAt;
     @ManyToOne
     @JoinColumn(name="userId")
     private User user;
