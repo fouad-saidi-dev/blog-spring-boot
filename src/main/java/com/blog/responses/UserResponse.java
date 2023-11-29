@@ -16,5 +16,4 @@ public class UserResponse {
     private String email;
     private String phone;
     private List<PostResponse> posts;
-
 }

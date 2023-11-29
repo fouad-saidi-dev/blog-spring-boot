@@ -100,11 +100,11 @@ public class UserController {
     }
 
     @GetMapping("")
-    public List<UserResponse> getUsers() {
+    public List<UserResponse> getUsers(Principal email) {
 
         List<UserResponse> userResponses = new ArrayList<>();
 
-        List<UserDto> users = userService.getUsers();
+        List<UserDto> users = userService.getUsers(email.getName());
 
         for (UserDto user : users) {
             ModelMapper modelMapper = new ModelMapper();

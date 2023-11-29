@@ -9,6 +9,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -27,4 +30,22 @@ public class RoleServiceImpl implements RoleService {
 
         return null;
     }
+
+    @Override
+    public List<RoleDto> displayRoles() {
+
+        List<Role> roles = roleRepository.findAll();
+
+        List<RoleDto> roleDtoList = new ArrayList<>();
+
+        for (Role role: roles) {
+            RoleDto roleDto = new RoleDto();
+            BeanUtils.copyProperties(role,roleDto);
+            roleDtoList.add(roleDto);
+        }
+
+        return roleDtoList;
+    }
+
+
 }

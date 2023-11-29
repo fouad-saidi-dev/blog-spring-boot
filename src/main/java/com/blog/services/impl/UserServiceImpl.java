@@ -8,6 +8,7 @@ import com.blog.repositories.UserRepository;
 import com.blog.services.UserService;
 import com.blog.utils.Util;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -141,16 +142,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<UserDto> getUsers() {
+    public List<UserDto> getUsers(String email) {
+
+        User checkUser = userRepository.findByEmail(email);
 
         List<UserDto> userDtoList = new ArrayList<>();
 
         List<User> users = userRepository.findAll();
 
+        if (checkUser.getRole().getName().equals("admin")) {
+
         for (User user : users) {
             ModelMapper modelMapper = new ModelMapper();
             UserDto userDto = modelMapper.map(user, UserDto.class);
             userDtoList.add(userDto);
+        }
+        }else {
+            throw new RuntimeException("not admin !");
         }
 
         return userDtoList;

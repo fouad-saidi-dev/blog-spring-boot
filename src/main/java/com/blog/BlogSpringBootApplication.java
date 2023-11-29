@@ -4,6 +4,7 @@ import com.blog.entities.Role;
 import com.blog.entities.User;
 import com.blog.repositories.RoleRepository;
 import com.blog.repositories.UserRepository;
+import com.blog.services.FileService;
 import com.blog.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,14 +23,16 @@ import java.time.LocalDateTime;
 
 
 @SpringBootApplication
-public class BlogSpringBootApplication /*implements CommandLineRunner*/ {
+public class BlogSpringBootApplication {
 
-//    @Autowired
-//    RoleRepository roleRepository;
-//
-//    @Autowired
-//    Util util;
+    @Autowired
+    RoleRepository roleRepository;
 
+    @Autowired
+    Util util;
+
+    @Autowired
+    FileService fileService;
 
     public static void main(String[] args) {
         SpringApplication.run(BlogSpringBootApplication.class, args);
@@ -42,8 +45,8 @@ public class BlogSpringBootApplication /*implements CommandLineRunner*/ {
 
 //    @Override
 //    public void run(String... args) throws Exception {
-//        roleRepository.save(new Role(null, util.generateStringId(15),"admin", LocalDate.now(),LocalDate.now()));
-//        roleRepository.save(new Role(null, util.generateStringId(15),"author", LocalDate.now(),LocalDate.now()));
-//        roleRepository.save(new Role(null, util.generateStringId(15),"subscriber", LocalDate.now(),LocalDate.now()));
+//        roleRepository.save(new Role(null, util.generateStringId(15),"admin", LocalDate.now(),LocalDate.now(),null));
+//        roleRepository.save(new Role(null, util.generateStringId(15),"author", LocalDate.now(),LocalDate.now(),null));
+//        roleRepository.save(new Role(null, util.generateStringId(15),"subscriber", LocalDate.now(),LocalDate.now(),null));
 //    }
 }

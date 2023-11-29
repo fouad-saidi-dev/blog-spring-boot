@@ -28,7 +28,9 @@ public class Post {
     @LastModifiedBy
     @Column(nullable = true)
     private LocalDateTime updatedAt;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
     private User user;
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Comment> comment;
 }

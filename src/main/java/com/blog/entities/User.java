@@ -38,7 +38,11 @@ public class User {
     @Column(nullable = true)
     @LastModifiedBy
     private LocalDateTime updatedAt;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Post> posts;
-
+    @ManyToOne
+    @JoinColumn(name = "roleId",nullable = true)
+    private Role role;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Comment> comments;
 }

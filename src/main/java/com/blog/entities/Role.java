@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,4 +34,6 @@ public class Role {
     @Column(nullable = false)
     private LocalDate updatedAt;
 
+    @OneToMany(mappedBy = "role",cascade = CascadeType.ALL)
+    private List<User> users;
 }
