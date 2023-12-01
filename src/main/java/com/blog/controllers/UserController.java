@@ -33,6 +33,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000/")
 public class UserController {
 
     @Autowired

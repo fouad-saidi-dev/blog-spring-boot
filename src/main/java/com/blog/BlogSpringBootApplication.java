@@ -1,30 +1,25 @@
 package com.blog;
 
-import com.blog.entities.Role;
-import com.blog.entities.User;
+
+import com.blog.entities.LikePost;
+import com.blog.entities.Post;
+import com.blog.repositories.LikePostRepository;
+import com.blog.repositories.PostRepository;
 import com.blog.repositories.RoleRepository;
-import com.blog.repositories.UserRepository;
 import com.blog.services.FileService;
 import com.blog.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.auditing.CurrentDateTimeProvider;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
 @SpringBootApplication
-public class BlogSpringBootApplication {
+public class BlogSpringBootApplication implements CommandLineRunner{
 
     @Autowired
     RoleRepository roleRepository;
@@ -33,7 +28,12 @@ public class BlogSpringBootApplication {
     Util util;
 
     @Autowired
+    LikePostRepository likeRepository;
+
+    @Autowired
     FileService fileService;
+    @Autowired
+    PostRepository postRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(BlogSpringBootApplication.class, args);
@@ -44,6 +44,20 @@ public class BlogSpringBootApplication {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public ApplicationContext applicationContext() {
+        return new ApplicationContext();
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        likeRepository.save(new LikePost(null, util.generateStringId(15),false, LocalDateTime.now(),null,null,null));
+        likeRepository.save(new LikePost(null, util.generateStringId(15),false, LocalDateTime.now(),null,null,null ));
+        likeRepository.save(new LikePost(null, util.generateStringId(15),false, LocalDateTime.now(),null,null,null ));
+        likeRepository.save(new LikePost(null, util.generateStringId(15),false, LocalDateTime.now(),null,null,null ));
+        likeRepository.save(new LikePost(null, util.generateStringId(15),false, LocalDateTime.now(),null,null,null ));
+
+    }
 
 
 //    @Override

@@ -1,5 +1,6 @@
 package com.blog.entities;
 
+import com.blog.services.LikePostService;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,4 +46,6 @@ public class User {
     private Role role;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Comment> comments;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<LikePost> likes;
 }

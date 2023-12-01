@@ -8,6 +8,7 @@ import com.blog.repositories.PostRepository;
 import com.blog.repositories.UserRepository;
 import com.blog.services.PostService;
 import com.blog.utils.Util;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,7 @@ import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -32,6 +34,8 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     PostRepository postRepository;
+
+    //private Logger log = (Logger) LoggerFactory.getLogger(PostService.class);
 
     @Override
     public PostDto createPost(PostDto postDto,String email) {
@@ -75,10 +79,9 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findByPostId(postId);
 
         if (post == null) throw new RuntimeException(postId);
-
+      //  log.info(post.getPostId());
         PostDto dto = new PostDto();
         BeanUtils.copyProperties(post,dto);
-
         return dto;
     }
 

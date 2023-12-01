@@ -8,31 +8,25 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity(name = "posts")
-public class Post {
+@Entity(name = "like_posts")
+public class LikePost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private String postId;
-    private String title;
-    private String body;
+    private String likeId;
+    private Boolean isLike;
     @CreatedDate
-    @Column(nullable = true)
     private LocalDateTime createdAt;
     @LastModifiedBy
-    @Column(nullable = true)
     private LocalDateTime updatedAt;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="userId")
+    @JoinColumn(name = "userId")
     private User user;
-    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private List<Comment> comment;
-    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
-    private List<LikePost> likes;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "postId")
+    private Post post;
 }
