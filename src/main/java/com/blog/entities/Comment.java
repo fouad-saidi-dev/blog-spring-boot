@@ -1,9 +1,12 @@
 package com.blog.entities;
 
+import com.blog.services.impl.LikeServiceImp;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,4 +24,6 @@ public class Comment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "postId")
     private Post post;
+    @OneToMany(mappedBy = "comment")
+    private List<LikeComment> likeComments;
 }

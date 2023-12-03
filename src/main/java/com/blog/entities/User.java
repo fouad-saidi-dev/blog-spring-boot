@@ -48,4 +48,6 @@ public class User {
     private List<Comment> comments;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<LikePost> likes;
+    @OneToMany(mappedBy = "user")
+    private List<LikeComment> likeComments;
 }
