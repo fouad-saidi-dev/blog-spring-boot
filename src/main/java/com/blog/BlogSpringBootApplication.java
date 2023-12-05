@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 
 
 @SpringBootApplication
-public class BlogSpringBootApplication implements CommandLineRunner{
+public class BlogSpringBootApplication {
 
     @Autowired
     RoleRepository roleRepository;
@@ -49,15 +49,7 @@ public class BlogSpringBootApplication implements CommandLineRunner{
         return new ApplicationContext();
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        likeRepository.save(new LikePost(null, util.generateStringId(15),false, LocalDateTime.now(),null,null,null));
-        likeRepository.save(new LikePost(null, util.generateStringId(15),false, LocalDateTime.now(),null,null,null ));
-        likeRepository.save(new LikePost(null, util.generateStringId(15),false, LocalDateTime.now(),null,null,null ));
-        likeRepository.save(new LikePost(null, util.generateStringId(15),false, LocalDateTime.now(),null,null,null ));
-        likeRepository.save(new LikePost(null, util.generateStringId(15),false, LocalDateTime.now(),null,null,null ));
 
-    }
 
 
 //    @Override

@@ -15,6 +15,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000/**",allowedHeaders = "*")
 @RestController
 @RequestMapping("/posts")
 public class PostController {
