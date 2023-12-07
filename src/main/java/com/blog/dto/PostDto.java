@@ -16,6 +16,7 @@ public class PostDto {
     private Long Id;
     private String postId;
     private String title;
+    private String description;
     private String body;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

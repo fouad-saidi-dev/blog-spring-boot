@@ -21,6 +21,8 @@ public class Post {
     private Long Id;
     private String postId;
     private String title;
+    @JoinColumn(name = "description")
+    private String description;
     private String body;
     @CreatedDate
     @Column(nullable = true)
@@ -32,7 +34,7 @@ public class Post {
     @JoinColumn(name="userId")
     private User user;
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private List<Comment> comment;
+    private List<Comment> comments;
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private List<LikePost> likes;
 }

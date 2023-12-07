@@ -94,6 +94,7 @@ public class PostServiceImpl implements PostService {
 
         if (checkUser == post.getUser()) {
             post.setTitle(postDto.getTitle());
+            post.setDescription(postDto.getDescription());
             post.setBody(postDto.getBody());
             post.setUpdatedAt(LocalDateTime.now());
         }

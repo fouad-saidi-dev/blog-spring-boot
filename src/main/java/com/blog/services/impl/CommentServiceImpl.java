@@ -43,4 +43,25 @@ public class CommentServiceImpl implements CommentService {
 
         return dto;
     }
+
+    @Override
+    public CommentDto updateComment(CommentDto commentDto, String CommentId, String email) {
+
+        User checkUser = userRepository.findByEmail(email);
+
+        if (checkUser == null) throw new UsernameNotFoundException(email);
+
+
+        Comment comment = new Comment();
+        BeanUtils.copyProperties(commentDto,comment);
+        if (checkUser == comment.getUser()) {
+            comment.setComment(commentDto.getComment());
+        }
+        Comment updatedComment = commentRepository.save(comment);
+        CommentDto dto = new CommentDto();
+        BeanUtils.copyProperties(updatedComment,dto);
+        return dto;
+
+    }
+
 }

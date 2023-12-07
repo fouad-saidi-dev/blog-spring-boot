@@ -65,7 +65,7 @@ public class PostController {
         return new ResponseEntity<PostResponse>(postResponse,HttpStatus.OK);
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "/edit/{id}")
     public ResponseEntity<PostResponse> updatePost(@PathVariable String id,@RequestBody PostRequest postRequest,Principal principal) {
 
         PostDto postDto = new PostDto();
