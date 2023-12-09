@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -63,5 +66,22 @@ public class CommentServiceImpl implements CommentService {
         return dto;
 
     }
+
+    @Override
+    public List<CommentDto> showComments(String postId) {
+
+        List<CommentDto> commentDtos = new ArrayList<>();
+
+        List<Comment> comments = commentRepository.findAllByPostId(postId);
+
+        for (Comment comment:comments) {
+            CommentDto commentDto = new CommentDto();
+            BeanUtils.copyProperties(comment,commentDto);
+            commentDtos.add(commentDto);
+        }
+
+        return commentDtos;
+    }
+
 
 }

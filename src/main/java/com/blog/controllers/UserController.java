@@ -71,7 +71,6 @@ public class UserController {
         ));
         String token = util.generateToken(userLoginRequest.getEmail());
         return ResponseEntity.ok(new UserLoginResponse(token,"Token generated successfully!"));
-
     }
 
     @PostMapping("/add-user")

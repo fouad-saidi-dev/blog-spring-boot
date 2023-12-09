@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
@@ -28,6 +30,21 @@ public class CommentController {
         BeanUtils.copyProperties(saveComment,commentResponse);
 
         return new ResponseEntity<CommentResponse>(commentResponse, HttpStatus.CREATED);
+    }
+    @GetMapping(path = "/posts/{id}")
+    public List<CommentResponse> getCommentsByPostId(@PathVariable String id) {
+
+        List<CommentResponse> commentResponses = new ArrayList<>();
+
+        List<CommentDto> comments = commentService.showComments(id);
+
+        for (CommentDto commentDto : comments) {
+            CommentResponse response = new CommentResponse();
+            BeanUtils.copyProperties(commentDto,response);
+            commentResponses.add(response);
+        }
+
+        return commentResponses;
     }
 
     @GetMapping("/test")

@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserResponse {
     private String firstName;
     private String lastName;
@@ -18,5 +18,5 @@ public class UserResponse {
     private String email;
     private String phone;
     private List<PostResponse> posts;
-    private List<Comment> comments;
+    private List<CommentResponse> comments;
 }
