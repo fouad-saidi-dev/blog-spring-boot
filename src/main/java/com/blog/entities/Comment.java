@@ -5,7 +5,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,6 +22,12 @@ public class Comment {
     private Long Id;
     private String commentId;
     private String comment;
+    @JoinColumn(name = "createdAt")
+    @CreatedDate
+    private LocalDateTime createdAt;
+    @JoinColumn(name = "updatedAt")
+    @LastModifiedBy
+    private LocalDateTime updatedAt;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
     private User user;

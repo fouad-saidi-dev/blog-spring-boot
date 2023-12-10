@@ -47,6 +47,20 @@ public class CommentController {
         return commentResponses;
     }
 
+    @PutMapping(path = "/edit/{id}")
+    public ResponseEntity<CommentResponse> updateComment(@RequestBody CommentRequest request,@PathVariable String id,Principal email) {
+
+        CommentDto commentDto = new CommentDto();
+        BeanUtils.copyProperties(request,commentDto);
+
+        CommentDto updatedComment = commentService.updateComment(commentDto,id,email.getName());
+
+        CommentResponse commentResponse = new CommentResponse();
+        BeanUtils.copyProperties(updatedComment,commentResponse);
+
+        return new ResponseEntity<CommentResponse>(HttpStatus.ACCEPTED);
+    }
+
     @GetMapping("/test")
     public String test() {
         return "test";

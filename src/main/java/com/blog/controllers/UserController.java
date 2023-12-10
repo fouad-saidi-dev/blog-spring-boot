@@ -70,6 +70,7 @@ public class UserController {
            userLoginRequest.getEmail(),userLoginRequest.getPassword()
         ));
         String token = util.generateToken(userLoginRequest.getEmail());
+
         return ResponseEntity.ok(new UserLoginResponse(token,"Token generated successfully!"));
     }
 

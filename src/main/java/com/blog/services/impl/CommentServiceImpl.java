@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,17 +49,17 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto updateComment(CommentDto commentDto, String CommentId, String email) {
+    public CommentDto updateComment(CommentDto commentDto, String commentId, String email) {
 
         User checkUser = userRepository.findByEmail(email);
 
+        Comment comment = commentRepository.findByCommentId(commentId);
+
         if (checkUser == null) throw new UsernameNotFoundException(email);
 
-
-        Comment comment = new Comment();
-        BeanUtils.copyProperties(commentDto,comment);
         if (checkUser == comment.getUser()) {
             comment.setComment(commentDto.getComment());
+            comment.setUpdatedAt(LocalDateTime.now());
         }
         Comment updatedComment = commentRepository.save(comment);
         CommentDto dto = new CommentDto();
