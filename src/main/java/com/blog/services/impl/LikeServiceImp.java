@@ -71,7 +71,7 @@ public class LikeServiceImp implements LikePostService {
     }
 
     @Override
-    public Long countLikes(Long id) {
+    public Long countLikes(String id) {
 
         Long count = likeRepository.countAllPostByIsLike(id);
 

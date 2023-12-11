@@ -25,7 +25,7 @@ public class CommentController {
 
         CommentDto commentDto = new CommentDto();
         BeanUtils.copyProperties(request,commentDto);
-        CommentDto saveComment = commentService.addComment(commentDto,principal.getName());
+        CommentDto saveComment = commentService.addComment(commentDto,principal.getName(),request.getPostId());
         CommentResponse commentResponse = new CommentResponse();
         BeanUtils.copyProperties(saveComment,commentResponse);
 
@@ -58,7 +58,7 @@ public class CommentController {
         CommentResponse commentResponse = new CommentResponse();
         BeanUtils.copyProperties(updatedComment,commentResponse);
 
-        return new ResponseEntity<CommentResponse>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<CommentResponse>(commentResponse,HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/test")

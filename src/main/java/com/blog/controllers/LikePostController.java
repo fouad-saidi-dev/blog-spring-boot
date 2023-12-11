@@ -53,7 +53,7 @@ public class LikePostController {
     }
 
     @GetMapping(path = "/count/like/{id}")
-    public ResponseEntity<Long> countLikes(@PathVariable Long id) {
+    public ResponseEntity<Long> countLikes(@PathVariable String id) {
         Long count = likeService.countLikes(id);
         return ResponseEntity.ok(count);
     }

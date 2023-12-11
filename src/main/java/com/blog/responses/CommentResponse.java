@@ -11,5 +11,6 @@ import org.springframework.security.core.userdetails.User;
 public class CommentResponse {
     private String comment;
     private String commentId;
+    private Long postId;
     private User user;
 }

@@ -5,6 +5,7 @@ import com.blog.entities.Comment;
 import com.blog.entities.Post;
 import com.blog.entities.User;
 import com.blog.repositories.CommentRepository;
+import com.blog.repositories.PostRepository;
 import com.blog.repositories.UserRepository;
 import com.blog.responses.CommentResponse;
 import com.blog.services.CommentService;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -28,19 +30,26 @@ public class CommentServiceImpl implements CommentService {
     CommentRepository commentRepository;
 
     @Autowired
+    PostRepository postRepository;
+    @Autowired
     Util util;
 
     @Override
-    public CommentDto addComment(CommentDto commentDto,String email) {
+    public CommentDto addComment(CommentDto commentDto,String email,String postId) {
 
         User checkUser = userRepository.findByEmail(email);
 
         if (checkUser == null) throw new UsernameNotFoundException("user not found !"+email);
 
+        Post checkPost = postRepository.findByPostId(postId);
+
+
         Comment comment = new Comment();
         BeanUtils.copyProperties(commentDto,comment);
         comment.setCommentId(util.generateStringId(15));
+        comment.setCreatedAt(LocalDateTime.now());
         comment.setUser(checkUser);
+        comment.setPost(checkPost);
         Comment newComment = commentRepository.save(comment);
         CommentDto dto = new CommentDto();
         BeanUtils.copyProperties(newComment,dto);

@@ -6,7 +6,7 @@ import com.blog.dto.UserDto;
 import java.util.List;
 
 public interface CommentService {
-    CommentDto addComment(CommentDto commentDto,String email);
+    CommentDto addComment(CommentDto commentDto,String email,String postId);
     CommentDto updateComment(CommentDto commentDto ,String CommentId,String email);
     List<CommentDto> showComments(String postId);
 

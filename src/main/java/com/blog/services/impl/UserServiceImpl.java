@@ -128,6 +128,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public UserDto getUser(String email) {
+
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) throw new RuntimeException(email);
+
+        UserDto dto = new UserDto();
+
+        BeanUtils.copyProperties(user, dto);
+
+        return dto;
+    }
+
+    @Override
     public UserDto showUser(String userId) {
 
         User user = userRepository.findByUserId(userId);
