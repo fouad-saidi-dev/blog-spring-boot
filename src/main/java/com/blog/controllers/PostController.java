@@ -80,9 +80,9 @@ public class PostController {
     }
 
     @DeleteMapping(path = "{id}")
-    public ResponseEntity<?> deletePost(@PathVariable String id) {
+    public ResponseEntity<?> deletePost(@PathVariable String id,Principal email) {
 
-        postService.deletePost(id);
+        postService.deletePost(id, email.getName());
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 

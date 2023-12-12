@@ -66,7 +66,7 @@ public class CommentServiceImpl implements CommentService {
 
         if (checkUser == null) throw new UsernameNotFoundException(email);
 
-        if (checkUser == comment.getUser()) {
+        if (checkUser == comment.getUser() || checkUser.getRole().getName().equals("admin")) {
             comment.setComment(commentDto.getComment());
             comment.setUpdatedAt(LocalDateTime.now());
         }
@@ -91,6 +91,21 @@ public class CommentServiceImpl implements CommentService {
         }
 
         return commentDtos;
+    }
+
+    @Override
+    public CommentDto deleteComment(String commentId,String email) {
+
+        User checkUser = userRepository.findByEmail(email);
+
+        Comment comment = commentRepository.findByCommentId(commentId);
+
+        if (comment == null) throw new UsernameNotFoundException(commentId);
+
+        if (checkUser.getRole().getName().equals("admin") || checkUser == comment.getUser()) {
+            commentRepository.delete(comment);
+        }
+        return null;
     }
 
 

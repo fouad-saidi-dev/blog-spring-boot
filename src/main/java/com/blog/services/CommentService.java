@@ -10,4 +10,6 @@ public interface CommentService {
     CommentDto updateComment(CommentDto commentDto ,String CommentId,String email);
     List<CommentDto> showComments(String postId);
 
+    CommentDto deleteComment(String commentId,String email);
+
 }

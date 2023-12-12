@@ -106,14 +106,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto deletePost(String id) {
+    public PostDto deletePost(String id,String email) {
+
+        User checkUser = userRepository.findByEmail(email);
 
         Post post = postRepository.findByPostId(id);
 
         if (post == null) throw new UsernameNotFoundException(id);
-
-        postRepository.delete(post);
-
+        if (checkUser.getRole().getName().equals("admin") || checkUser == post.getUser()) {
+            postRepository.delete(post);
+        }
         return null;
     }
 }

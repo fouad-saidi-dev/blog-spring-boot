@@ -9,5 +9,5 @@ public interface PostService {
     List<PostDto> allPosts();
     PostDto showPost(String postId);
     PostDto updatePost(PostDto postDto,String postId,String email);
-    PostDto deletePost(String id);
+    PostDto deletePost(String id,String email);
 }

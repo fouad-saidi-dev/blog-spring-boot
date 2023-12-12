@@ -61,6 +61,15 @@ public class CommentController {
         return new ResponseEntity<CommentResponse>(commentResponse,HttpStatus.ACCEPTED);
     }
 
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity<?> deleteComment(@PathVariable String id,Principal user) {
+
+        commentService.deleteComment(id,user.getName());
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
+
     @GetMapping("/test")
     public String test() {
         return "test";

@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LikePostRequest {
     private Boolean isLike;
-    private Integer postId;
+    private String postId;
 }
