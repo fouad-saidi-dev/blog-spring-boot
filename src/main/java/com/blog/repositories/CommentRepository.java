@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment,Long> {
-    @Query(value = "SELECT c,c.user.firstName FROM comments c WHERE c.post.postId = :postId")
+    @Query(value = "SELECT c,c.user.userId FROM comments c WHERE c.post.postId = :postId")
     List<Comment> findAllByPostId(String postId);
 
     Comment findByCommentId(String commentId);

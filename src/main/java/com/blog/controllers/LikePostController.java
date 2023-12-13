@@ -22,13 +22,13 @@ public class LikePostController {
     @Autowired
     LikePostService likeService;
 
-    @PostMapping("/add")
-    public ResponseEntity<LikeResponse> addLike(@RequestBody LikePostRequest request, Principal principal, String id) {
+    @PostMapping(path = "/add/{postId}")
+    public ResponseEntity<LikeResponse> addLike(@RequestBody LikePostRequest request, Principal principal,@PathVariable String postId) {
 
         LikePostDto likeDto1 = new LikePostDto();
 
         BeanUtils.copyProperties(request,likeDto1);
-        LikePostDto likeDto = likeService.addLike(likeDto1,principal.getName(),id);
+        LikePostDto likeDto = likeService.addLike(likeDto1,principal.getName(),postId);
 
         LikeResponse likeResponse = new LikeResponse();
         BeanUtils.copyProperties(likeDto,likeResponse);

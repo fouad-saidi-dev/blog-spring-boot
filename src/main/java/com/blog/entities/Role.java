@@ -34,6 +34,6 @@ public class Role {
     @Column(nullable = false)
     private LocalDate updatedAt;
 
-    @OneToMany(mappedBy = "role",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "role",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<User> users;
 }

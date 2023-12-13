@@ -13,6 +13,6 @@ public class CommentDto {
     private Long Id;
     private String commentId;
     private String comment;
-    private User user;
-    private Post post;
+    private UserDto user;
+    private PostDto post;
 }

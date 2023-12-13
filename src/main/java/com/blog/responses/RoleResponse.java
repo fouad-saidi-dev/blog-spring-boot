@@ -13,5 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 public class RoleResponse {
     private String name;
-    private List<UserResponse> users = new ArrayList<>();
+    private List<UserResponse> users ;
 }

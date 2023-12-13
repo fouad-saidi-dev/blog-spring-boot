@@ -43,7 +43,6 @@ public class CommentServiceImpl implements CommentService {
 
         Post checkPost = postRepository.findByPostId(postId);
 
-
         Comment comment = new Comment();
         BeanUtils.copyProperties(commentDto,comment);
         comment.setCommentId(util.generateStringId(15));

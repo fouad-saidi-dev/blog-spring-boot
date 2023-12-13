@@ -17,5 +17,5 @@ public class RoleDto {
     private String name;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private List<User> users;
+    private List<UserDto> users;
 }

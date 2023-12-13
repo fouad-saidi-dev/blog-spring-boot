@@ -1,6 +1,5 @@
 package com.blog.requests;
 
-import com.blog.entities.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LikePostRequest {
+public class LikeCommentRequest {
     private Boolean isLike;
-    private String postId;
 }

@@ -18,6 +18,6 @@ public class UserResponse {
     private String email;
     private String phone;
     private List<PostResponse> posts;
-    private List<CommentResponse> comments;
+    //private List<CommentResponse> comments;
     private RoleResponse role;
 }

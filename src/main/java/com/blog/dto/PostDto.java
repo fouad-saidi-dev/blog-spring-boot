@@ -20,6 +20,6 @@ public class PostDto {
     private String body;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private User user;
-    private List<Comment> comments;
+    private UserDto user;
+    private List<CommentDto> comments;
 }

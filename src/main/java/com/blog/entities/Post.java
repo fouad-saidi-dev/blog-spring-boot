@@ -33,7 +33,7 @@ public class Post {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
     private User user;
-    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Comment> comments;
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private List<LikePost> likes;

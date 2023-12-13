@@ -25,5 +25,7 @@ public class UserDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean admin = false;
-    private List<Post> posts;
+    private List<PostDto> posts;
+    private List<CommentDto> comments;
+    private List<RoleDto> roles;
 }

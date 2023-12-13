@@ -1,5 +1,6 @@
 package com.blog.responses;
 
+import com.blog.entities.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,6 @@ import org.springframework.security.core.userdetails.User;
 public class CommentResponse {
     private String comment;
     private String commentId;
-    private Long postId;
-    private User user;
+    private UserResponse user;
+    private PostResponse post;
 }

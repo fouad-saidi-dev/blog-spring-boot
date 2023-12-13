@@ -16,6 +16,6 @@ public class LikeCommentDto {
     private Boolean isLike;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private User user;
-    private Comment comment;
+    private UserDto user;
+    private CommentDto comment;
 }

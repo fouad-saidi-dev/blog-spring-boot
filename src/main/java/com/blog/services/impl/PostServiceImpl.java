@@ -1,5 +1,6 @@
 package com.blog.services.impl;
 
+import com.blog.dto.CommentDto;
 import com.blog.dto.PostDto;
 import com.blog.dto.UserDto;
 import com.blog.entities.Post;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {

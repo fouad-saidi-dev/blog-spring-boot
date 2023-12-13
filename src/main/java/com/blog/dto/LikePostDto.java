@@ -16,6 +16,6 @@ public class LikePostDto {
     private Boolean isLike;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private User user;
-    private Post post;
+    private UserDto user;
+    private PostDto post;
 }
