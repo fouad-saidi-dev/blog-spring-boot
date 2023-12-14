@@ -4,4 +4,7 @@ import com.blog.dto.LikeCommentDto;
 
 public interface LikeCommentService {
     LikeCommentDto addLikeToComment(LikeCommentDto commentDto,String email, String commentId);
+
+    Long countLikes(String id);
+    Long countDislikes(Long id);
 }

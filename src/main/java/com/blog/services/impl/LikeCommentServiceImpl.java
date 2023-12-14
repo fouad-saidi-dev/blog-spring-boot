@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Service
 public class LikeCommentServiceImpl implements LikeCommentService {
@@ -37,15 +38,30 @@ public class LikeCommentServiceImpl implements LikeCommentService {
 
         Comment checkComment = commentRepository.findByCommentId(commentId);
 
+        Boolean userAlreadyLiked = likeCommentRepository.existsByUserAndComment(chechUser, checkComment);
+
         LikeComment likeComment = new LikeComment();
         BeanUtils.copyProperties(commentDto,likeComment);
-        likeComment.setComment(checkComment);
-        likeComment.setUser(chechUser);
-        likeComment.setCreatedAt(LocalDateTime.now());
-        likeComment.setLikeCommentId(util.generateStringId(15));
+
+        if (!userAlreadyLiked) {
+            likeComment.setComment(checkComment);
+            likeComment.setUser(chechUser);
+            likeComment.setCreatedAt(LocalDateTime.now());
+            likeComment.setLikeCommentId(util.generateStringId(15));
+        }
         LikeComment newLike = likeCommentRepository.save(likeComment);
         LikeCommentDto dto = new LikeCommentDto();
         BeanUtils.copyProperties(newLike,dto);
         return dto;
+    }
+
+    @Override
+    public Long countLikes(String id) {
+        return likeCommentRepository.CountLikeComment(id);
+    }
+
+    @Override
+    public Long countDislikes(Long id) {
+        return null;
     }
 }
