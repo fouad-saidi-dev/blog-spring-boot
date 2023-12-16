@@ -87,6 +87,21 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
+    @GetMapping(path = "/user/{userId}")
+    public List<PostResponse> displayPostsByUser(Principal principal,@PathVariable String userId) {
+
+        List<PostResponse> responses = new ArrayList<>();
+
+        List<PostDto> posts = postService.getPostsByUser(principal.getName(), userId);
+
+        for (PostDto postDto:posts) {
+            PostResponse postResponse = new PostResponse();
+            BeanUtils.copyProperties(postDto,postResponse);
+            responses.add(postResponse);
+        }
+
+        return responses;
+    }
 
 
 }

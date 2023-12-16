@@ -1,5 +1,6 @@
 package com.blog.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,7 +34,7 @@ public class Role {
     @LastModifiedBy
     @Column(nullable = false)
     private LocalDate updatedAt;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "role",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<User> users;
 }

@@ -30,16 +30,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+//@CrossOrigin(origins = "http://localhost:3000/**",allowedHeaders = "*")
 @CrossOrigin(origins = "http://localhost:3000/**",allowedHeaders = "*")
 @RestController
-@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     UserService userService;
-
-    //@Autowired
-    //private JwtService jwtService;
 
     @Autowired
     UserRepository userRepository;
@@ -63,7 +60,7 @@ public class UserController {
         }
     }*/
 
-    @PostMapping("/login")
+    @PostMapping("/users/login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -74,7 +71,7 @@ public class UserController {
         return ResponseEntity.ok(new UserLoginResponse(token,"Token generated successfully!", user.getUserId()));
     }
 
-    @PostMapping("/add-user")
+    @PostMapping("/users/add-user")
     public ResponseEntity<UserResponse> addUser(@RequestBody UserRequest userRequest) {
 
         ModelMapper modelMapper = new ModelMapper();
@@ -89,7 +86,7 @@ public class UserController {
     }
 
 
-    @GetMapping(path = "{id}",produces = {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(path = "/users/{id}",produces = {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserResponse> getUser(@PathVariable String id){
 
         UserDto userDto = userService.showUser(id);
@@ -99,7 +96,7 @@ public class UserController {
         return new ResponseEntity<UserResponse>(userResponse,HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping(value = "/users")
     public List<UserResponse> getUsers(Principal email) {
 
         List<UserResponse> userResponses = new ArrayList<>();
@@ -115,7 +112,7 @@ public class UserController {
         return userResponses;
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "/users/{id}")
     public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userRequest, @PathVariable String id, Principal email) {
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userRequest,userDto);
@@ -128,7 +125,7 @@ public class UserController {
         return new ResponseEntity<>(userResponse,HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable String id) {
 
         userService.deleteUser(id);

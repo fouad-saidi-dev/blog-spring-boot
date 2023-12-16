@@ -10,4 +10,5 @@ public interface PostService {
     PostDto showPost(String postId);
     PostDto updatePost(PostDto postDto,String postId,String email);
     PostDto deletePost(String id,String email);
+    List<PostDto> getPostsByUser(String email,String userId);
 }

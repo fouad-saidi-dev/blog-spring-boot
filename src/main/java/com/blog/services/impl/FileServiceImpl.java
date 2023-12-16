@@ -1,10 +1,8 @@
 package com.blog.services.impl;
 
-import com.blog.dto.FileDto;
 import com.blog.entities.File;
 import com.blog.repositories.FIleRepository;
 import com.blog.services.FileService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -19,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -72,10 +71,14 @@ public class FileServiceImpl implements FileService {
     @Override
     public File store(MultipartFile file) throws IOException {
         // for store in uploads folder
-        //Files.copy(file.getInputStream(), this.root.resolve(Objects.requireNonNull(file.getOriginalFilename())));
+        Files.copy(file.getInputStream(), this.root.resolve(Objects.requireNonNull(file.getOriginalFilename())));
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String url = String.valueOf(this.root.resolve(file.getOriginalFilename()));
         File fileEntity = new File(null,"12345",fileName,url);
         return fIleRepository.save(fileEntity);
+    }
+    @Override
+    public Stream<File> getAllFiles() {
+        return fIleRepository.findAll().stream();
     }
 }

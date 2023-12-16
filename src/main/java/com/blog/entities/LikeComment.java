@@ -1,5 +1,6 @@
 package com.blog.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class LikeComment {
     @Column(nullable = true)
     @LastModifiedBy
     private LocalDateTime updatedAt;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
     private User user;

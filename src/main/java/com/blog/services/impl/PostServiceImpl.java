@@ -120,4 +120,26 @@ public class PostServiceImpl implements PostService {
         }
         return null;
     }
+
+    @Override
+    public List<PostDto> getPostsByUser(String email, String userId) {
+
+        User checkUser = userRepository.findByEmail(email);
+
+        User user = userRepository.findByUserId(userId);
+
+        if (checkUser == null) throw new UsernameNotFoundException(email);
+
+        List<PostDto> postDtos = new ArrayList<>();
+
+        List<Post> posts = postRepository.findByUserId(userId);
+        if (checkUser == user) {
+            for (Post post : posts) {
+                PostDto dto = new PostDto();
+                BeanUtils.copyProperties(post, dto);
+                postDtos.add(dto);
+            }
+        }
+        return postDtos;
+    }
 }
