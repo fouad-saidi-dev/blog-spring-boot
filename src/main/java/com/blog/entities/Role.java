@@ -19,7 +19,7 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
     @Column(nullable = false)
     private String roleId;
@@ -34,7 +34,7 @@ public class Role {
     @LastModifiedBy
     @Column(nullable = false)
     private LocalDate updatedAt;
-    @JsonIgnore
+
     @OneToMany(mappedBy = "role",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<User> users;
 }

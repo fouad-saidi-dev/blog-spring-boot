@@ -9,7 +9,7 @@ public interface CommentService {
     CommentDto addComment(CommentDto commentDto,String email,String postId);
     CommentDto updateComment(CommentDto commentDto ,String CommentId,String email);
     List<CommentDto> showComments(String postId);
-
     CommentDto deleteComment(String commentId,String email);
+    List<CommentDto> getComments(String email);
 
 }

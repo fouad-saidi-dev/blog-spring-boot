@@ -4,6 +4,7 @@ import com.blog.services.LikePostService;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,20 +44,20 @@ public class User {
     @Column(nullable = true)
     @LastModifiedBy
     private LocalDateTime updatedAt;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonBackReference
     private List<Post> posts;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "roleId",nullable = true)
-    @JsonIgnore
     private Role role;
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonBackReference
     private List<Comment> comments;
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonBackReference
     private List<LikePost> likes;
+
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-    @JsonBackReference
     private List<LikeComment> likeComments;
 }

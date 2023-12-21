@@ -60,6 +60,20 @@ public class CommentController {
 
         return new ResponseEntity<CommentResponse>(commentResponse,HttpStatus.ACCEPTED);
     }
+    @GetMapping("")
+    public List<CommentResponse> getComments (Principal user) {
+
+        List<CommentResponse> commentResponses = new ArrayList<>();
+
+        List<CommentDto> commentDtoList = commentService.getComments(user.getName());
+
+        for (CommentDto comment : commentDtoList) {
+            CommentResponse response = new CommentResponse();
+            BeanUtils.copyProperties(comment,response);
+            commentResponses.add(response);
+        }
+        return commentResponses;
+    }
 
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable String id,Principal user) {

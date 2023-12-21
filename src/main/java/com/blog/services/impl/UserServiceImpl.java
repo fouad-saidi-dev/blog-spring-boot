@@ -171,8 +171,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             UserDto userDto = modelMapper.map(user, UserDto.class);
             userDtoList.add(userDto);
         }
-        }else {
-            throw new RuntimeException("not admin !");
         }
 
         return userDtoList;

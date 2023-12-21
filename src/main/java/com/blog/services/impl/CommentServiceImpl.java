@@ -107,5 +107,25 @@ public class CommentServiceImpl implements CommentService {
         return null;
     }
 
+    @Override
+    public List<CommentDto> getComments(String email) {
+        User checkUser = userRepository.findByEmail(email);
+
+        if (checkUser == null) throw new UsernameNotFoundException("Not Found this email: "+email);
+
+        List<CommentDto> commentDtoList = new ArrayList<>();
+
+        List<Comment> comments = commentRepository.findAll();
+
+        if (checkUser.getRole().getName().equals("admin")) {
+            for (Comment comment : comments) {
+                CommentDto dto = new CommentDto();
+                BeanUtils.copyProperties(comment,dto);
+                commentDtoList.add(dto);
+            }
+        }
+        return commentDtoList;
+    }
+
 
 }

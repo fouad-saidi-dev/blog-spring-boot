@@ -17,7 +17,7 @@ public class UserResponse {
     private String userId;
     private String email;
     private String phone;
-    private List<PostResponse> posts;
-    private List<CommentResponse> comments;
+    //private List<PostResponse> posts;
+    //private List<CommentResponse> comments;
     //private RoleResponse role;
 }
