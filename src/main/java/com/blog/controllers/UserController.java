@@ -97,7 +97,7 @@ public class UserController {
 
         return new ResponseEntity<UserResponse>(userResponse,HttpStatus.OK);
     }
-
+    @ExceptionHandler(RuntimeException.class)
     @GetMapping(value = "/users")
     public List<UserResponse> getUsers(Principal email) {
 

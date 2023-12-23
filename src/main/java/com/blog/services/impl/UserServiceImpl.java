@@ -9,6 +9,8 @@ import com.blog.services.UserService;
 import com.blog.utils.Util;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,6 +35,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     Util util;
+
+    Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -84,6 +88,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         savedUserDto.setEncryptedPassword(user.getEncryptedPassword());
         savedUserDto.setPhone(user.getPhone());
         savedUserDto.setCreatedAt(user.getCreatedAt());
+
+        log.info("user was added");
 
         return savedUserDto;
     }
