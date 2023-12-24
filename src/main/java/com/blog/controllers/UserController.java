@@ -2,9 +2,12 @@ package com.blog.controllers;
 
 import com.blog.dto.UserDto;
 import com.blog.entities.User;
+import com.blog.enums.ErrorType;
+import com.blog.exceptions.UserException;
 import com.blog.repositories.UserRepository;
 import com.blog.requests.UserLoginRequest;
 import com.blog.requests.UserRequest;
+import com.blog.responses.ErrorResponse;
 import com.blog.responses.UserLoginResponse;
 import com.blog.responses.UserResponse;
 import com.blog.security.JwtService;
@@ -49,6 +52,7 @@ public class UserController {
     @Autowired
     private JwtUtil util;
 
+
     /*@PostMapping("/login")
     public String authenticateAndGetToken(@RequestBody UserLoginRequest userLoginRequest) {
 
@@ -75,6 +79,8 @@ public class UserController {
 
     @PostMapping("/users/add-user")
     public ResponseEntity<UserResponse> addUser(@RequestBody UserRequest userRequest) {
+
+        if (userRequest.getFirstName().isEmpty()) throw new UserException(ErrorType.REQUIRED_FIELD.getMessage());
 
         ModelMapper modelMapper = new ModelMapper();
 
