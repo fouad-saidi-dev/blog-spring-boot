@@ -64,7 +64,7 @@ public class WebSecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 //.cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/users/login","/users/add-user","/posts",
+                    auth.requestMatchers("/users/login","/users/add-user","/posts","files/get/**",
                             "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll();
                     auth.requestMatchers(HttpMethod.OPTIONS).permitAll();
                     auth.anyRequest().authenticated();

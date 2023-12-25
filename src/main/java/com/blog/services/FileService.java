@@ -10,8 +10,9 @@ import java.util.stream.Stream;
 public interface FileService {
 
      void init();
-     void saveFile(MultipartFile file);
+     void saveFile(MultipartFile file,String email);
      Resource load(String filename);
      File store(MultipartFile file) throws IOException;
      Stream<File> getAllFiles();
+     Resource loadAsResource(String fileName);
 }

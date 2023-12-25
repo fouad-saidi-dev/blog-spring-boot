@@ -4,6 +4,8 @@ import com.blog.dto.PostDto;
 import com.blog.dto.UserDto;
 import com.blog.entities.Post;
 import com.blog.entities.User;
+import com.blog.enums.ErrorType;
+import com.blog.exceptions.UserException;
 import com.blog.repositories.UserRepository;
 import com.blog.services.UserService;
 import com.blog.utils.Util;
@@ -61,7 +63,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         User checkUser = userRepository.findByEmail(userDto.getEmail());
 
-        if (checkUser != null) throw new RuntimeException("user was already exist !");
+        if (checkUser != null) throw new UserException(ErrorType.ALREADY_EXIST.getMessage());
+
         Map<Long, User> map = new HashMap<>();
 
         //userDto.setUserId(util.generateStringId(15));

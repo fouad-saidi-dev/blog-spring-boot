@@ -1,7 +1,9 @@
 package com.blog.services.impl;
 
 import com.blog.entities.File;
+import com.blog.entities.User;
 import com.blog.repositories.FIleRepository;
+import com.blog.repositories.UserRepository;
 import com.blog.services.FileService;
 import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,8 @@ public class FileServiceImpl implements FileService {
 
     @Autowired
     FIleRepository fIleRepository;
-
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public void init() {
@@ -38,17 +41,27 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void saveFile(MultipartFile file) {
+    public void saveFile(MultipartFile file,String email) {
+
+        User checkUser = userRepository.findByEmail(email);
 
         try {
-            Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
-
+            String fileName = checkUser.getFirstName() + "-" +checkUser.getLastName()+getFileExtension(file);
+            Files.copy(file.getInputStream(), this.root.resolve(fileName));
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("A file of that name already exists");
             }
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    private String getFileExtension(MultipartFile file) {
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename != null && originalFilename.contains(".")) {
+            return originalFilename.substring(originalFilename.lastIndexOf("."));
+        }
+        return "";
     }
 
     @Override
@@ -81,4 +94,22 @@ public class FileServiceImpl implements FileService {
     public Stream<File> getAllFiles() {
         return fIleRepository.findAll().stream();
     }
+
+    @Override
+    public Resource loadAsResource(String fileName) {
+        try {
+            Path file = root.resolve(fileName);
+            Resource resource = new UrlResource(file.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+                return  resource;
+            } else {
+                throw new RuntimeException("Could not read the file!");
+            }
+        } catch(MalformedURLException e) {
+            throw new RuntimeException("Error: "+e.getMessage());
+        }
+    }
+
+
 }
