@@ -1,9 +1,12 @@
 package com.blog.services.impl;
 
 import com.blog.entities.File;
+import com.blog.entities.Post;
 import com.blog.entities.User;
 import com.blog.repositories.FIleRepository;
+import com.blog.repositories.PostRepository;
 import com.blog.repositories.UserRepository;
+import com.blog.responses.PostResponse;
 import com.blog.services.FileService;
 import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,8 @@ public class FileServiceImpl implements FileService {
     FIleRepository fIleRepository;
     @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    PostRepository postRepository;
     @Override
     public void init() {
         try {
@@ -47,8 +51,34 @@ public class FileServiceImpl implements FileService {
 
         try {
             String fileName = checkUser.getFirstName() + "-" +checkUser.getLastName()+getFileExtension(file);
+
+            int i=1;
+            while (Files.exists(this.root.resolve(fileName))){
+                fileName = checkUser.getFirstName() + "-" +checkUser.getLastName()+i+getFileExtension(file);
+                i++;
+            }
+
             Files.copy(file.getInputStream(), this.root.resolve(fileName));
         } catch (Exception e) {
+
+            if (e instanceof FileAlreadyExistsException) {
+                throw new RuntimeException("A file of that name already exists");
+            }
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void savePicture(MultipartFile file,String email,String postId) {
+
+        Post checkPost = postRepository.findByPostId(postId);
+
+        try {
+            String fileName = checkPost.getPostId()+getFileExtension(file);
+
+            Files.copy(file.getInputStream(), this.root.resolve(fileName));
+        } catch (Exception e) {
+
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("A file of that name already exists");
             }

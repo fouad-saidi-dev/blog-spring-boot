@@ -19,5 +19,5 @@ public class UserResponse {
     private String phone;
     //private List<PostResponse> posts;
     //private List<CommentResponse> comments;
-    //private RoleResponse role;
+    private RoleResponse role;
 }

@@ -43,25 +43,22 @@ public class FileController {
 
     @GetMapping("/get/{filename}")
     public ResponseEntity<byte[]> serveFile(@PathVariable String filename) {
+
         Resource file = fileService.loadAsResource(filename);
 
         try {
-            // Read the file content into a byte array
             byte[] data = Files.readAllBytes(file.getFile().toPath());
 
-            // Determine the media type of the file
             MediaType mediaType = MediaTypeFactory.getMediaType(file).orElse(MediaType.APPLICATION_OCTET_STREAM);
 
             // url
             String url = MvcUriComponentsBuilder.fromMethodName(FileController.class,"getFile",file.getFilename().toString()).build().toString();
 
-            // Set the Content-Type header
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(mediaType);
             headers.add(url,"url");
 
 
-            // Return the byte array and headers in the response entity
             return new ResponseEntity<>(data, headers,HttpStatus.OK);
         } catch (IOException e) {
             throw new RuntimeException("Error loading the file: " + filename, e);
@@ -97,6 +94,25 @@ public class FileController {
 
             Arrays.asList(files).stream().forEach(file -> {
                 fileService.saveFile(file, principal.getName());
+                fileNames.add(file.getOriginalFilename());
+            });
+
+            message = "Uploaded the files successfully: " + fileNames;
+            return ResponseEntity.status(HttpStatus.OK).body(new FileResponse(message));
+        } catch (Exception e) {
+            message = "Fail to upload files!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new FileResponse(message));
+        }
+    }
+
+    @PostMapping(path = "/upload/post/{postId}")
+    public ResponseEntity<FileResponse> uploadPicture(@RequestParam("files") MultipartFile[] files, Principal principal,@PathVariable String postId) {
+        String message = "";
+        try {
+            List<String> fileNames = new ArrayList<>();
+
+            Arrays.asList(files).stream().forEach(file -> {
+                fileService.savePicture(file, principal.getName(),postId);
                 fileNames.add(file.getOriginalFilename());
             });
 

@@ -1,13 +1,11 @@
 package com.blog.dto;
 
-import com.blog.entities.Post;
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor

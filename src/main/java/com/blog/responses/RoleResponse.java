@@ -3,6 +3,7 @@ package com.blog.responses;
 import com.blog.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -13,5 +14,4 @@ import java.util.List;
 @NoArgsConstructor
 public class RoleResponse {
     private String name;
-    private List<UserResponse> users ;
 }

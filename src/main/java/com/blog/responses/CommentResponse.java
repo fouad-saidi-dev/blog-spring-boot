@@ -13,5 +13,5 @@ public class CommentResponse {
     private String comment;
     private String commentId;
     //private UserResponse user;
-    private PostResponse post;
+    //private PostResponse post;
 }

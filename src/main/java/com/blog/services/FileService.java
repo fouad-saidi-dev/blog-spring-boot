@@ -11,6 +11,7 @@ public interface FileService {
 
      void init();
      void saveFile(MultipartFile file,String email);
+     void savePicture(MultipartFile file,String email,String postId);
      Resource load(String filename);
      File store(MultipartFile file) throws IOException;
      Stream<File> getAllFiles();

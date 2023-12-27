@@ -1,8 +1,10 @@
 package com.blog.responses;
 
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -17,5 +19,8 @@ public class PostResponse {
     private String postId;
     private String description;
     private LocalDateTime createdAt;
+    //private UserResponse user;
+    @Getter
     private List<CommentResponse> comments;
+
 }
