@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (checkUser != null) throw new RuntimeException("user was already exist !");
         ModelMapper modelMapper = new ModelMapper();
         userDto.setUserId(util.generateStringId(15));
-        userDto.setEncryptedPassword("password");
+        userDto.setPassword("password");
         User user = modelMapper.map(userDto, User.class);
 
         User newUser = userRepository.save(user);
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
-        user.setEncryptedPassword(bCryptPasswordEncoder.encode("password"));
+        user.setEncryptedPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         user.setPhone(userDto.getPhone());
         user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         savedUserDto.setFirstName(user.getFirstName());
         savedUserDto.setLastName(user.getLastName());
         savedUserDto.setEmail(user.getEmail());
-        savedUserDto.setEncryptedPassword(user.getEncryptedPassword());
+        savedUserDto.setPassword(user.getEncryptedPassword());
         savedUserDto.setPhone(user.getPhone());
         savedUserDto.setCreatedAt(user.getCreatedAt());
 

@@ -45,6 +45,8 @@ public class WebSecurityConfig {
     private UserDetailsService userDetailsService;
     @Autowired
     JwtAuthenticationFilter filter;
+
+
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -64,8 +66,8 @@ public class WebSecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 //.cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/users/login","/users/add-user","/posts","files/get/**",
-                            "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll();
+                    auth.requestMatchers(SecurityConstants.URL_NOT_AUTH).permitAll();
+                    auth.requestMatchers(SecurityConstants.URL_SWAGGER).permitAll();
                     auth.requestMatchers(HttpMethod.OPTIONS).permitAll();
                     auth.anyRequest().authenticated();
                 })

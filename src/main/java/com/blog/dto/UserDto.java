@@ -18,7 +18,7 @@ public class UserDto {
     private String lastName;
     private String email;
     private String password;
-    private String encryptedPassword;
+    //private String encryptedPassword;
     private String phone;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
