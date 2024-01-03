@@ -37,4 +37,11 @@ public class Post {
     private List<Comment> comments;
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private List<LikePost> likes;
+    @ManyToMany
+    @JoinTable(
+            name = "post_tags",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags;
 }

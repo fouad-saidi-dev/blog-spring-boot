@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -150,6 +151,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return dto;
     }
 
+
+
     @Override
     public UserDto showUser(String userId) {
 
@@ -165,22 +168,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<UserDto> getUsers(String email) {
+    public List<UserDto> getUsers() {
 
-        User checkUser = userRepository.findByEmail(email);
+        //User checkUser = userRepository.findByEmail();
 
         List<UserDto> userDtoList = new ArrayList<>();
 
         List<User> users = userRepository.findAll();
 
-        if (checkUser.getRole().getName().equals("admin")) {
+//        if (checkUser.getRole().getName().equals("admin")) {
 
         for (User user : users) {
             ModelMapper modelMapper = new ModelMapper();
             UserDto userDto = modelMapper.map(user, UserDto.class);
             userDtoList.add(userDto);
         }
-        }
+  //      }
 
         return userDtoList;
     }

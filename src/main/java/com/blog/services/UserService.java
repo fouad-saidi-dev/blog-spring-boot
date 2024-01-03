@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
 
     UserDto createUser(UserDto userDto);
-    List<UserDto> getUsers(String email);
+    List<UserDto> getUsers();
     UserDto showUser(String userId);
     UserDto addUser(UserDto userDto);
     UserDto updateUser(String id,UserDto userDto,String email);
@@ -16,4 +16,5 @@ public interface UserService {
     UserDto deleteUser(String userId);
 
     UserDto getUser(String email);
+
 }

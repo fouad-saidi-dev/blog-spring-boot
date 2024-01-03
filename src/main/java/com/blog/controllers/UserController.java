@@ -1,5 +1,6 @@
 package com.blog.controllers;
 
+import com.blog.annotations.Admin;
 import com.blog.dto.UserDto;
 import com.blog.entities.User;
 import com.blog.enums.ErrorType;
@@ -103,13 +104,14 @@ public class UserController {
 
         return new ResponseEntity<UserResponse>(userResponse,HttpStatus.OK);
     }
+    @Admin
     @ExceptionHandler(RuntimeException.class)
     @GetMapping(value = "/users")
-    public List<UserResponse> getUsers(Principal email) {
+    public List<UserResponse> getUsers() {
 
         List<UserResponse> userResponses = new ArrayList<>();
 
-        List<UserDto> users = userService.getUsers(email.getName());
+        List<UserDto> users = userService.getUsers();
 
         for (UserDto user : users) {
             ModelMapper modelMapper = new ModelMapper();
