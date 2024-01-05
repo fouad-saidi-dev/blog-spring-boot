@@ -4,8 +4,10 @@ import com.blog.dto.CommentDto;
 import com.blog.dto.PostDto;
 import com.blog.dto.UserDto;
 import com.blog.entities.Post;
+import com.blog.entities.Tag;
 import com.blog.entities.User;
 import com.blog.repositories.PostRepository;
+import com.blog.repositories.TagRepository;
 import com.blog.repositories.UserRepository;
 import com.blog.services.PostService;
 import com.blog.utils.Util;
@@ -37,10 +39,12 @@ public class PostServiceImpl implements PostService {
     @Autowired
     PostRepository postRepository;
 
+    @Autowired
+    TagRepository tagRepository;
     //private Logger log = (Logger) LoggerFactory.getLogger(PostService.class);
 
     @Override
-    public PostDto createPost(PostDto postDto,String email) {
+    public PostDto createPost(PostDto postDto,String email,List<String> tagNames) {
 
         User currentUser = userRepository.findByEmail(email);
 
@@ -51,6 +55,20 @@ public class PostServiceImpl implements PostService {
         post.setUser(currentUser);
         post.setCreatedAt(LocalDateTime.now());
         Post newPost = postRepository.save(post);
+        // add Tags
+
+        for (String tagName: tagNames) {
+           Tag tag = tagRepository.findByName(tagName);
+           if (tag == null) {
+               tag = new Tag();
+               tag.setName(tagName);
+               tag.setTagId(util.generateStringId(15));
+               tagRepository.save(tag);
+           }
+           newPost.getTags().add(tag);
+        }
+
+        postRepository.save(newPost);
 
         PostDto dto = new PostDto();
         BeanUtils.copyProperties(newPost, dto);
@@ -141,5 +159,17 @@ public class PostServiceImpl implements PostService {
             }
         }
         return postDtos;
+    }
+
+    @Override
+    public List<PostDto> getPostsByTagName(String tagName) {
+        List<PostDto> postDtoList = new ArrayList<>();
+        List<Post> posts = postRepository.findAllByTagName(tagName);
+        for (Post post:posts) {
+            PostDto postDto = new PostDto();
+            BeanUtils.copyProperties(post,postDto);
+            postDtoList.add(postDto);
+        }
+        return postDtoList;
     }
 }

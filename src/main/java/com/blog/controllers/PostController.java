@@ -26,10 +26,11 @@ public class PostController {
     @PostMapping("/create")
     public ResponseEntity<PostResponse> createPost(@RequestBody PostRequest postRequest, Principal principal) {
 
+        List<String> tagNames = postRequest.getTags();
         PostDto postDto = new PostDto();
         BeanUtils.copyProperties(postRequest,postDto);
 
-        PostDto createPost = postService.createPost(postDto, principal.getName());
+        PostDto createPost = postService.createPost(postDto, principal.getName(),tagNames);
 
         PostResponse postResponse = new PostResponse();
 
@@ -101,6 +102,17 @@ public class PostController {
         }
 
         return responses;
+    }
+    @GetMapping(path = "/tag/{tagName}")
+    public List<PostResponse> getPostsByTagName(@PathVariable String tagName) {
+        List<PostResponse> postResponses = new ArrayList<>();
+        List<PostDto> postDtoList = postService.getPostsByTagName(tagName);
+        for (PostDto postDto:postDtoList) {
+            PostResponse postResponse = new PostResponse();
+            BeanUtils.copyProperties(postDto,postResponse);
+            postResponses.add(postResponse);
+        }
+        return postResponses;
     }
 
 

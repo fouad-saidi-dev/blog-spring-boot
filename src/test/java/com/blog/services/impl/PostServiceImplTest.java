@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +37,9 @@ public class PostServiceImplTest {
         postDto.setPostId("26787kjekjTest");
         postDto.setTitle("title test");
         postDto.setBody("body test");
-        PostDto savePost = postService.createPost(postDto,"email");
+        List<String> tags = new ArrayList<>();
+        tags.add("test tag");
+        PostDto savePost = postService.createPost(postDto,"email",tags);
         assertNotNull(savePost);
     }
 
@@ -47,7 +51,7 @@ public class PostServiceImplTest {
     @Test
     public void shouldShowPostWithSuccess(){
 
-        Post post = new Post(null,"1234","title test","body test",LocalDateTime.now(),LocalDateTime.now(),null,null);
+        Post post = new Post(null,"1234","title test","description test","body test",LocalDateTime.now(),LocalDateTime.now(),null,null,null,null);
 
         Mockito.when(postRepository.findByPostId(Mockito.anyString())).thenReturn(post);
 
