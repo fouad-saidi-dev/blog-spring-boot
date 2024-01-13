@@ -1,5 +1,6 @@
 package com.blog.services.impl;
 
+import com.blog.annotations.Owner;
 import com.blog.dto.CommentDto;
 import com.blog.dto.PostDto;
 import com.blog.dto.UserDto;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.awt.print.Pageable;
 import java.time.LocalDateTime;
@@ -104,7 +106,7 @@ public class PostServiceImpl implements PostService {
         BeanUtils.copyProperties(post,dto);
         return dto;
     }
-
+    //@Owner(postId = "postId")
     @Override
     public PostDto updatePost(PostDto postDto, String postId, String email) {
 
@@ -124,6 +126,7 @@ public class PostServiceImpl implements PostService {
 
         return dto;
     }
+
 
     @Override
     public PostDto deletePost(String id,String email) {
