@@ -7,6 +7,7 @@ import com.blog.entities.User;
 import com.blog.enums.ErrorType;
 import com.blog.exceptions.UserException;
 import com.blog.repositories.UserRepository;
+import com.blog.services.EmailService;
 import com.blog.services.UserService;
 import com.blog.utils.Util;
 import org.modelmapper.ModelMapper;
@@ -38,6 +39,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     Util util;
+
+    @Autowired
+    EmailService emailService;
 
     Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -94,6 +98,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         savedUserDto.setCreatedAt(user.getCreatedAt());
 
         log.info("user was added");
+
+        emailService.sendMail(savedUserDto.getEmail(), savedUserDto.getFirstName());
 
         return savedUserDto;
     }

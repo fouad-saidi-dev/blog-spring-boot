@@ -11,7 +11,8 @@ public class SecurityConstants {
             "/swagger-resources/**",
             "/swagger-ui/**",
             "/webjars/**",
-            "/swagger-ui/index.html"
+            "/swagger-ui/index.html",
+            "/actuator/**"
     };
     public static final String[] URL_NOT_AUTH = {
             "/users/login","/users/add-user","/posts","files/get/**"
