@@ -175,4 +175,20 @@ public class PostServiceImpl implements PostService {
         }
         return postDtoList;
     }
+
+    @Override
+    public List<PostDto> findPosts(String title) {
+        List<PostDto> postDtoList = new ArrayList<>();
+
+        List<Post> posts = title == null ? postRepository.findAll() : postRepository.findPostByTitleContains(title) ;
+
+        for (Post post : posts
+        ) {
+            PostDto postDto = new PostDto();
+            BeanUtils.copyProperties(post,postDto);
+            postDtoList.add(postDto);
+        }
+
+        return postDtoList;
+    }
 }

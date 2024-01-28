@@ -18,5 +18,5 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     Post findByIdPost(Long Id);
     @Query(value = "SELECT p FROM posts p JOIN p.tags t WHERE t.name = :tagName")
     List<Post> findAllByTagName(String tagName);
-
+    List<Post> findPostByTitleContains(String title);
 }

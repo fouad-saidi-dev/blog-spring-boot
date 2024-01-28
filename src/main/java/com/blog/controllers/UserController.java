@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-//@CrossOrigin(origins = "http://localhost:3000/**",allowedHeaders = "*")
 @CrossOrigin(origins = "http://localhost:3000/**",allowedHeaders = "*")
 @RestController
 public class UserController {

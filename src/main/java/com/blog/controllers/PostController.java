@@ -115,5 +115,20 @@ public class PostController {
         return postResponses;
     }
 
+    @GetMapping("/query")
+    public List<PostResponse> findAllPosts(@RequestParam(required = false) String title) {
+
+        List<PostResponse> postResponses = new ArrayList<>();
+
+        List<PostDto> posts = postService.findPosts(title);
+
+        for (PostDto postDto:posts) {
+            PostResponse postResponse = new PostResponse();
+            BeanUtils.copyProperties(postDto,postResponse);
+            postResponses.add(postResponse);
+        }
+
+        return postResponses;
+    }
 
 }

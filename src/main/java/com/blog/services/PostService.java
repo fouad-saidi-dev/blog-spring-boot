@@ -12,4 +12,5 @@ public interface PostService {
     PostDto deletePost(String id,String email);
     List<PostDto> getPostsByUser(String email,String userId);
     List<PostDto> getPostsByTagName(String tagName);
+    List<PostDto> findPosts(String title);
 }
