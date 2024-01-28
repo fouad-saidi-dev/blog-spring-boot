@@ -60,7 +60,7 @@ public class PostServiceImpl implements PostService {
         // add Tags
 
         for (String tagName: tagNames) {
-           Tag tag = tagRepository.findByName(tagName);
+           Tag tag = tagRepository.findFirstByName(tagName);
            if (tag == null) {
                tag = new Tag();
                tag.setName(tagName);
