@@ -145,5 +145,18 @@ public class UserController {
 
     }
 
+    @PatchMapping(path = "/updatePassword/{id}")
+    public ResponseEntity<UserResponse> updatePassword(@PathVariable String id,@RequestBody UserRequest userRequest,Principal principal){
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userRequest,userDto);
+
+        UserDto dto = userService.updatePassword(id,userDto, principal.getName());
+        UserResponse userResponse = new UserResponse();
+
+        BeanUtils.copyProperties(dto,userResponse);
+
+        return new ResponseEntity<>(userResponse,HttpStatus.ACCEPTED);
+    }
+
 
 }

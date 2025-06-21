@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -136,7 +137,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         User user = userRepository.findByUserId(userId);
 
-        if (user == null) throw new UsernameNotFoundException(userId);
+        if (user == null) throw new UsernameNotFoundException("User not found "+userId);
 
         userRepository.delete(user);
 
@@ -157,6 +158,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return dto;
     }
 
+    @Override
+    public UserDto updatePassword(String userId, UserDto userDto,String email) {
+
+        User user  = userRepository.findByUserId(userId);
+
+        if (user == null) throw new UsernameNotFoundException("User not Found"+userId);
+
+        if (userRepository.existsUserByEmail(email)){
+            user.setEncryptedPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        }
+
+        User updatedPassword = userRepository.save(user);
+
+        UserDto dto = new UserDto();
+        BeanUtils.copyProperties(updatedPassword,dto);
+
+        return dto;
+    }
 
 
     @Override
